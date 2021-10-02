@@ -40,6 +40,11 @@ public class EmployeeController {
         employeeService.deleteEmployeeById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+    @PutMapping("/update")
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee){
+        Employee updatedEmployee = employeeService.addEmployee(employee);
+        return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
+    }
 
 
 }
