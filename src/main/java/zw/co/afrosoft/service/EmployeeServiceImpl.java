@@ -6,6 +6,7 @@ import zw.co.afrosoft.domain.Employee;
 import zw.co.afrosoft.exceptions.BusinessException;
 import zw.co.afrosoft.persistence.EmployeeRepository;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -45,19 +46,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployeeById(Long id) {
-        Employee employee = employeeRepository.findById(id).get();
-        return employee;
+        try{
+            Employee employee = employeeRepository.findById(id).get();
+            return employee;
+        }catch (IllegalArgumentException e){
+            throw new BusinessException("606","the id provided is null,Please provide an Id"+ e.getMessage());
+        }catch (NoSuchElementException e){
+            throw new BusinessException("607","There is no element with a given id"+ e.getMessage());
+        }
+
     }
 
     @Override
     public void deleteEmployeeById(Long id) {
-        employeeRepository.deleteById(id);
+        try{
+            employeeRepository.deleteById(id);
+        }catch (IllegalArgumentException e){
+            throw new BusinessException("608","Please provide an id of the element you would like to delete");
+        }catch (NoSuchElementException e){
+            throw new BusinessException("609","There is no element with a given id to delete");
+        }
+
     }
 
     @Override
     public List<Employee> getEmployeeByName(String name) {
-        List<Employee> employees = employeeRepository.findByName(name);
-        return employees;
+        try{
+            List<Employee> employees = employeeRepository.findByName(name);
+            if(employees.isEmpty()){
+                throw new BusinessException("610","There are no elements with the given name");
+            }
+            return employees;
+        }catch (IllegalArgumentException e){
+            throw new BusinessException("611","Please provide a name to search for elements");
+        }catch (Exception e){
+            throw new BusinessException("612","Something went wrong while returning the List of employees with the given name");
+        }
+
     }
 
 }
