@@ -30,6 +30,11 @@ public class EmployeeController {
         Employee employee = employeeService.getEmployeeById(id);
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
+    @GetMapping("/getEmployeeByName/{name}")
+    public ResponseEntity<List<Employee>> getEmployeeByName(@PathVariable String name){
+        List<Employee> allEmployees = employeeService.getEmployeeByName(name);
+        return new ResponseEntity<>(allEmployees, HttpStatus.OK);
+    }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteEmployeeById(@PathVariable Long id){
         employeeService.deleteEmployeeById(id);
