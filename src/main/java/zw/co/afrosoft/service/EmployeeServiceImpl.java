@@ -18,14 +18,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(Employee employee) {
         try{
             if(employee.getName().isEmpty() || employee.getName().length()==0){
-                throw new BusinessException("601","Name should not be blank");
+                throw new BusinessException("Name should not be blank");
             }
             Employee savedEmployee = employeeRepository.save(employee);
             return savedEmployee;
         }catch (IllegalArgumentException e){
-            throw new BusinessException("602","Given employee is null"+ e.getMessage());
+            throw new BusinessException("Given employee is null"+ e.getMessage());
         }catch (Exception e){
-            throw new BusinessException("603","Something went wrong in the Service Layer while adding the employee"+ e.getMessage());
+            throw new BusinessException("Something went wrong in the Service Layer while adding the employee"+ e.getMessage());
         }
 
     }
@@ -35,11 +35,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         try{
             List<Employee> savedEmployees = employeeRepository.findAll();
             if(savedEmployees.isEmpty()){
-                throw new BusinessException("604","The List of employees is currently empty,We have nothing to return");
+                throw new BusinessException("The List of employees is currently empty,We have nothing to return");
             }
             return savedEmployees;
         }catch(Exception e){
-            throw new BusinessException("605","Something went wrong in the Service layer while fetching all employees"+ e.getMessage());
+            throw new BusinessException("Something went wrong in the Service layer while fetching all employees"+ e.getMessage());
         }
 
     }
@@ -50,9 +50,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             Employee employee = employeeRepository.findById(id).get();
             return employee;
         }catch (IllegalArgumentException e){
-            throw new BusinessException("606","the id provided is null,Please provide an Id"+ e.getMessage());
+            throw new BusinessException("the id provided is null,Please provide an Id"+ e.getMessage());
         }catch (NoSuchElementException e){
-            throw new BusinessException("607","There is no element with a given id"+ e.getMessage());
+            throw new BusinessException("There is no element with a given id"+ e.getMessage());
         }
 
     }
@@ -62,9 +62,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         try{
             employeeRepository.deleteById(id);
         }catch (IllegalArgumentException e){
-            throw new BusinessException("608","Please provide an id of the element you would like to delete");
+            throw new BusinessException("Please provide an id of the element you would like to delete");
         }catch (NoSuchElementException e){
-            throw new BusinessException("609","There is no element with a given id to delete");
+            throw new BusinessException("There is no element with a given id to delete");
         }
 
     }
@@ -74,13 +74,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         try{
             List<Employee> employees = employeeRepository.findByName(name);
             if(employees.isEmpty()){
-                throw new BusinessException("610","There are no elements with the given name");
+                throw new BusinessException("There are no elements with the given name");
             }
             return employees;
         }catch (IllegalArgumentException e){
-            throw new BusinessException("611","Please provide a name to search for elements");
+            throw new BusinessException("Please provide a name to search for elements");
         }catch (Exception e){
-            throw new BusinessException("612","Something went wrong while returning the List of employees with the given name");
+            throw new BusinessException("Something went wrong while returning the List of employees with the given name");
         }
 
     }

@@ -12,6 +12,5 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BusinessException extends RuntimeException{
-    private String errorCode;
     private String errorMessage;
 }
