@@ -16,15 +16,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(Employee employee) {
+        if(employee.getName().isEmpty() || employee.getName().length()==0){
+            throw new BusinessException("Name should not be blank");
+        }
         try{
-            if(employee.getName().isEmpty() || employee.getName().length()==0){
-                throw new BusinessException("Name should not be blank");
-            }
             Employee savedEmployee = employeeRepository.save(employee);
             return savedEmployee;
         }catch (IllegalArgumentException e){
-            throw new BusinessException("Given employee is null"+ e.getMessage());
-        }catch (Exception e){
             throw new BusinessException("Something went wrong in the Service Layer while adding the employee"+ e.getMessage());
         }
 
